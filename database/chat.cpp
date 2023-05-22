@@ -30,7 +30,7 @@ namespace database
                         << "`name` VARCHAR(1024) NOT NULL,"
                         << "`creator_id` INT NOT NULL,"
                         << "PRIMARY KEY (`id`),"
-                        << "CONSTRAINT fk_c_u foreign key (creator_id) references User (id))",
+                        << "CONSTRAINT fk_c_u foreign key (creator_id) references User (id))-- sharding:0",
                 now;
         }
 
@@ -79,7 +79,7 @@ namespace database
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
             Chat a;
-            select << "SELECT id, name, creator_id FROM Chat where id=?",
+            select << "SELECT id, name, creator_id FROM Chat where id=?-- sharding:0",
                 into(a._id),
                 into(a._name),
                 into(a._creator_id),
@@ -112,14 +112,14 @@ namespace database
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement insert(session);
 
-            insert << "INSERT INTO Chat (name, creator_id) VALUES(?, ?)",
+            insert << "INSERT INTO Chat (name, creator_id) VALUES(?, ?)-- sharding:0",
                 use(_name),
                 use(_creator_id);
 
             insert.execute();
 
             Poco::Data::Statement select(session);
-            select << "SELECT LAST_INSERT_ID()",
+            select << "SELECT LAST_INSERT_ID()-- sharding:0",
                 into(_id),
                 range(0, 1); //  iterate over result set one row at a time
 

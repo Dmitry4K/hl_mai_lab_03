@@ -30,7 +30,7 @@ namespace database
                         << "`chat_id` INT NOT NULL,"
                         << "`user_id` INT NOT NULL,"
                         << "`message` VARCHAR(1024) NOT NULL,"
-                        << "PRIMARY KEY (`id`))",
+                        << "PRIMARY KEY (`id`))-- sharding:0",
                 now;
         }
 
@@ -82,7 +82,7 @@ namespace database
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
             Message a;
-            select << "SELECT id, chat_id, user_id, message FROM Message where id=?",
+            select << "SELECT id, chat_id, user_id, message FROM Message where id=?-- sharding:0",
                 into(a._id),
                 into(a._chat_id),
                 into(a._user_id),
@@ -116,7 +116,7 @@ namespace database
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement insert(session);
 
-            insert << "INSERT INTO Message (chat_id, user_id, message) VALUES(?, ?, ?)",
+            insert << "INSERT INTO Message (chat_id, user_id, message) VALUES(?, ?, ?)-- sharding:0",
                 use(_chat_id),
                 use(_user_id),
                 use(_message);
@@ -124,7 +124,7 @@ namespace database
             insert.execute();
 
             Poco::Data::Statement select(session);
-            select << "SELECT LAST_INSERT_ID()",
+            select << "SELECT LAST_INSERT_ID()-- sharding:0",
                 into(_id),
                 range(0, 1); //  iterate over result set one row at a time
 
@@ -197,7 +197,7 @@ namespace database
             std::vector<Message> result;
             Message a;
 
-            select << "SELECT id, chat_id, user_id, message FROM Message WHERE Message.chat_id=?",
+            select << "SELECT id, chat_id, user_id, message FROM Message WHERE Message.chat_id=?-- sharding:0",
                 into(a.id()),
                 into(a.chat_id()),
                 into(a.user_id()),

@@ -32,7 +32,7 @@ namespace database
                         << "`user_id` INT NOT NULL,"
                         << "PRIMARY KEY(chat_id,user_id),"
                         << "CONSTRAINT fk_utc_u foreign key (user_id) references User (id),"
-                        << "CONSTRAINT fk_utc_c foreign key (chat_id) references Chat (id))",
+                        << "CONSTRAINT fk_utc_c foreign key (chat_id) references Chat (id))-- sharding:0",
                 now;
         }
 
@@ -83,7 +83,7 @@ namespace database
             Poco::Data::Statement select(session);
             std::vector<Chat> result;
             Chat a;
-            select << "SELECT DISTINCT Chat.id, Chat.name FROM Chat INNER JOIN UserToChat ON Chat.id = UserToChat.chat_id WHERE UserToChat.user_id=?",
+            select << "SELECT DISTINCT Chat.id, Chat.name FROM Chat INNER JOIN UserToChat ON Chat.id = UserToChat.chat_id WHERE UserToChat.user_id=?-- sharding:0",
                 into(a.id()),
                 into(a.name()),
                 use(user_id),
@@ -118,7 +118,7 @@ namespace database
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement insert(session);
 
-            insert << "INSERT INTO UserToChat (chat_id, user_id) VALUES(?, ?)",
+            insert << "INSERT INTO UserToChat (chat_id, user_id) VALUES(?, ?)-- sharding:0",
                 use(_chat_id),
                 use(_user_id);
 
