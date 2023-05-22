@@ -212,7 +212,7 @@ namespace database
             first_name += "%";
             last_name += "%";
             for(auto& hint : database::Database::get_all_hints()) {
-                select << "SELECT id, first_name, last_name, email, title, login, password FROM User where first_name LIKE ? and last_name LIKE ?"+hint,
+                select << "SELECT id, first_name, last_name, email, title, login, password FROM User where first_name LIKE ? and last_name LIKE ? "+hint,
                     into(a._id),
                     into(a._first_name),
                     into(a._last_name),
