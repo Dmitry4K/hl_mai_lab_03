@@ -165,7 +165,7 @@ public:
                 std::string login = form.get("login"), password = form.get("password");
                 std::cout << 1 << std::endl;
                 if (auto id = database::User::auth(login, password)) {
-                    auto user = database::User::read_by_id(id.value()).value();
+                    auto user = database::User::read_by_id_and_login(id.value(), login).value();
                     std::string token = user.login() + ':' + user.password();
                     std::ostringstream os;
                     Poco::Base64Encoder b64in(os);

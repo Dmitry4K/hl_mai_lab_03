@@ -39,6 +39,7 @@ namespace database
             std::string &password();
 
             static void init();
+            static std::optional<User> read_by_id_and_login(long id, std::string &login);
             static std::optional<long> auth(std::string &login, std::string &password);
             static std::vector<User> read_all();
             static std::vector<User> search(std::string first_name,std::string last_name);
