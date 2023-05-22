@@ -1,4 +1,9 @@
--- Для тестирования подойдут пользователи с 1, 2, 3
+-- Для тестирования подойдут пользователи с name1, name2, name3
+
+
+-- MUST BE EXECUTED ON 1 SHARD
+
+
 CREATE TABLE IF NOT EXISTS `User` (`id` INT NOT NULL AUTO_INCREMENT,
                         `first_name` VARCHAR(256) NOT NULL,
                         `last_name` VARCHAR(256) NOT NULL,
