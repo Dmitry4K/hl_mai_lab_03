@@ -53,6 +53,48 @@
         "streambuf": "cpp",
         "cfenv": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
-    }
+        "typeinfo": "cpp",
+        "condition_variable": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp"
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 6033,
+            "driver": "MySQL",
+            "name": "proxysql",
+            "username": "stud",
+            "database": "archdb"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3360,
+            "driver": "MySQL",
+            "name": "db-node-1",
+            "database": "archdb",
+            "username": "stud"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3361,
+            "driver": "MySQL",
+            "name": "db-node-2",
+            "database": "archdb",
+            "username": "stud"
+        }
+    ]
 }

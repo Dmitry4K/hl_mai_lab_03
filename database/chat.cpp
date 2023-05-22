@@ -29,8 +29,7 @@ namespace database
             create_stmt << "CREATE TABLE IF NOT EXISTS `Chat` (`id` INT NOT NULL AUTO_INCREMENT,"
                         << "`name` VARCHAR(1024) NOT NULL,"
                         << "`creator_id` INT NOT NULL,"
-                        << "PRIMARY KEY (`id`),"
-                        << "CONSTRAINT fk_c_u foreign key (creator_id) references User (id))-- sharding:0",
+                        << "PRIMARY KEY (`id`))-- sharding:0",
                 now;
         }
 
