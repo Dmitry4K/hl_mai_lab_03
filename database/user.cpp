@@ -209,12 +209,12 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Statement select(session);
             std::vector<User> result;
             User a;
             first_name += "%";
             last_name += "%";
             for(auto& hint : database::Database::get_all_hints()) {
+                Statement select(session);
                 select << "SELECT id, first_name, last_name, email, title, login, password FROM User where first_name LIKE ? and last_name LIKE ? "+hint,
                     into(a._id),
                     into(a._first_name),
