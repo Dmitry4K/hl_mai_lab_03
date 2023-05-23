@@ -169,7 +169,8 @@ namespace database
             std::vector<User> result;
             User a;
             for(auto& hint : database::Database::get_all_hints()) {
-                select << "SELECT id, first_name, last_name, email, title, login, password FROM User" + hint,
+                std::string query = "SELECT id, first_name, last_name, email, title, login, password FROM User" + hint;
+                select << query,
                     into(a._id),
                     into(a._first_name),
                     into(a._last_name),
@@ -181,8 +182,10 @@ namespace database
 
                 while (!select.done())
                 {
-                    if (select.execute())
+                    if (select.execute()) {
                         result.push_back(a);
+                        std::cout << "Executed query: " << query << std::endl;
+                    }
                 }
             }
             return result;
