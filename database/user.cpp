@@ -165,11 +165,11 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Statement select(session);
             std::vector<User> result;
             User a;
             for(auto& hint : database::Database::get_all_hints()) {
                 std::string query = "SELECT id, first_name, last_name, email, title, login, password FROM User" + hint;
+                Statement select(session);
                 select << query,
                     into(a._id),
                     into(a._first_name),
